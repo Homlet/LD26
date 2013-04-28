@@ -112,6 +112,7 @@ package uk.co.homletmoo.ld26.entity.level
 							m_emitter.emit( ParticleDef.POOF, x * TILE_SIZE, y * TILE_SIZE );
 						
 						GameWorld.globals.points += 5;
+						GameWorld.globals.tiles++;
 						
 						continue;
 					}
@@ -124,6 +125,7 @@ package uk.co.homletmoo.ld26.entity.level
 							m_emitter.emit( ParticleDef.POOF, x * TILE_SIZE, y * TILE_SIZE );
 						
 						GameWorld.globals.points += 5;
+						GameWorld.globals.tiles++;
 						
 						continue;
 					}
@@ -136,6 +138,7 @@ package uk.co.homletmoo.ld26.entity.level
 							m_emitter.emit( ParticleDef.POOF, x * TILE_SIZE, y * TILE_SIZE );
 						
 						GameWorld.globals.points += 10;
+						GameWorld.globals.tiles++;
 						
 						continue;
 					}

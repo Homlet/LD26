@@ -12,6 +12,7 @@ package uk.co.homletmoo.ld26.entity
 	import uk.co.homletmoo.ld26.CollisionDef;
 	import uk.co.homletmoo.ld26.Const;
 	import uk.co.homletmoo.ld26.Main;
+	import uk.co.homletmoo.ld26.Sound;
 	import uk.co.homletmoo.ld26.world.EndWorld;
 	import uk.co.homletmoo.ld26.world.GameWorld;
 	
@@ -53,6 +54,8 @@ package uk.co.homletmoo.ld26.entity
 		private var m_jumpTimer:Number;
 		private var m_ledgeTimer:Number;
 		
+		private var m_deathTimer:Number;
+		
 		public function Player() 
 		{
 			super( START_POSITION.x, START_POSITION.y );
@@ -75,8 +78,9 @@ package uk.co.homletmoo.ld26.entity
 			m_onGround = false;
 			m_jumped = false;
 			m_jumpTimer = JUMP_LENGTH;
-			m_jumpTimer = LEDGE_LENGTH;
+			m_ledgeTimer = LEDGE_LENGTH;
 			
+			m_deathTimer = 0.0;
 			
 			graphic = m_graphic;
 			
@@ -92,11 +96,21 @@ package uk.co.homletmoo.ld26.entity
 		{
 			if ( GameWorld.globals.health <= 0 )
 			{
+				m_deathTimer += FP.elapsed;
+				
 				m_graphic.alpha = 1.0;
 				m_graphic.play( ANIM_DEATH );
 				
+				if ( m_deathTimer % 0.5 <= 0.1 && m_deathTimer > 0.1 )
+				{
+					Sound.HIT.play();
+				}
+				
 				if ( m_graphic.complete )
+				{
+					Sound.END.play();
 					FP.world = new EndWorld();
+				}
 				
 				return;
 			}
@@ -117,7 +131,7 @@ package uk.co.homletmoo.ld26.entity
 			
 			// Check if the player has hit a wall
 			if ( collide( CollisionDef.WORLD, x + 1, y ) )
-			{
+			{				
 				m_inKnockback = true;
 				
 				m_velocity.x = -JUMP_SPEED;
@@ -128,7 +142,10 @@ package uk.co.homletmoo.ld26.entity
 					m_graceTimer = GRACE_LENGTH;
 					GameWorld.globals.health -= 1;
 					Main.quake.start();
-				}
+					
+					Sound.HURT.play();
+				} else
+					Sound.HIT.play();
 			}
 			
 			// Accelerate to full x speed
@@ -157,6 +174,9 @@ package uk.co.homletmoo.ld26.entity
 				m_jumped = true;
 				
 				m_velocity.y = -JUMP_SPEED;
+				
+				Sound.JUMP.play();
+				Sound.JET.play( 0.4 );
 			}
 			
 			// Decrement jump timer if jumping

@@ -61,6 +61,10 @@ package uk.co.homletmoo.ld26
 		public static const END_RAW:Class;
 		public static const END:BitmapData = FP.getBitmap( END_RAW );
 		
+		[Embed (source = "res/retry.png")]
+		public static const RETRY_RAW:Class;
+		public static const RETRY:BitmapData = FP.getBitmap( RETRY_RAW );
+		
 		// OGMO
 		[Embed (source = "ogmo/001.oel", mimeType = "application/octet-stream")]
 		public static const OGMO_001:Class;

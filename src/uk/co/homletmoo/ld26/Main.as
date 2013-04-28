@@ -39,7 +39,7 @@ package uk.co.homletmoo.ld26
 			Sound.initialize();
 			InputDef.initialize();
 			
-			FP.world = new GameWorld();
+			FP.world = new SplashWorld();
 		}
 		
 		override public function update():void
