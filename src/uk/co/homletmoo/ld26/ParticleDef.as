@@ -4,9 +4,9 @@ package uk.co.homletmoo.ld26
 	 * ...
 	 * @author Homletmoo
 	 */
-	public class Const 
+	public class ParticleDef 
 	{
-		public static const GRAVITY:Number = 16;
+		public static const POOF:String = "p";
 	}
-	
+
 }

@@ -6,7 +6,7 @@ package uk.co.homletmoo.ld26
 	 */
 	public class Display 
 	{
-		public static const WIDTH:uint = 640;
+		public static const WIDTH:uint = 1280;
 		public static const HEIGHT:uint = 480;
 		
 		public static const SCALE:uint = 3;

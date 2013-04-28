@@ -8,12 +8,12 @@ package uk.co.homletmoo.ld26
 	 */
 	public class Sound 
 	{
-//		[Embed (source = "res/hm.mp3")] public static const HM_RAW:Class;
-//		public static var HM:Sfx;
+		[Embed (source = "res/hm.mp3")] public static const HM_RAW:Class;
+		public static var HM:Sfx;
 		
 		public static function initialize():void
 		{
-//			HM = new Sfx( HM_RAW );
+			HM = new Sfx( HM_RAW );
 		}
 	}
 

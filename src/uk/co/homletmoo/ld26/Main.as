@@ -4,16 +4,19 @@ package uk.co.homletmoo.ld26
 	import net.flashpunk.*;
 	import net.flashpunk.utils.Input;
 	import net.flashpunk.utils.Key;
+	import uk.co.homletmoo.ld26.world.GameWorld;
 	import uk.co.homletmoo.ld26.world.SplashWorld;
 	
-	[SWF (width = "640", height = "480", backgroundColor = "#dddddd")]
+	[SWF (width = "1280", height = "480", backgroundColor = "#dddddd")]
 	
 	/**
 	 * ...
 	 * @author Homletmoo
 	 */
 	public class Main extends Engine
-	{		
+	{
+		public static var quake:Quake;
+		
 		public function Main()
 		{
 			super(
@@ -22,6 +25,8 @@ package uk.co.homletmoo.ld26
 				Display.FRAME_RATE,
 				Display.FIXED_TIME
 			);
+			
+			quake = new Quake();
 			
 	//		FP.console.enable();
 			FP.console.toggleKey = Key.TAB;
@@ -34,9 +39,15 @@ package uk.co.homletmoo.ld26
 			Sound.initialize();
 			InputDef.initialize();
 			
-			FP.world = new SplashWorld();
+			FP.world = new GameWorld();
 		}
 		
+		override public function update():void
+		{
+			quake.update();
+			
+			super.update();
+		}
 	}
 	
 }

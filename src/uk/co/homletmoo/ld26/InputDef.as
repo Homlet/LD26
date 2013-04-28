@@ -12,7 +12,7 @@ package uk.co.homletmoo.ld26
 		
 		public static function initialize():void
 		{
-			net.flashpunk.utils.Input.define( BUTTON, Key.X, Key.C, Key.SPACE, Key.ENTER, Key.NUMPAD_ENTER );
+			net.flashpunk.utils.Input.define( BUTTON, Key.X, Key.C, Key.SPACE, Key.UP );
 		}
 		
 	}
