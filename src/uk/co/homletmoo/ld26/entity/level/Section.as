@@ -10,6 +10,7 @@ package uk.co.homletmoo.ld26.entity.level
 	import uk.co.homletmoo.ld26.Assets;
 	import uk.co.homletmoo.ld26.CollisionDef;
 	import uk.co.homletmoo.ld26.Display;
+	import uk.co.homletmoo.ld26.entity.Heart;
 	import uk.co.homletmoo.ld26.entity.Player;
 	import uk.co.homletmoo.ld26.ParticleDef;
 	import uk.co.homletmoo.ld26.world.GameWorld;
@@ -66,7 +67,7 @@ package uk.co.homletmoo.ld26.entity.level
 		
 		private var m_emitter:Emitter;
 		
-		public function Section( offset:int, tilesData:XMLList, gridData:String )
+		public function Section( offset:int, tilesData:XMLList, gridData:String, heartData:XMLList )
 		{
 			super( offset * WIDTH, 0 );
 			
@@ -83,6 +84,18 @@ package uk.co.homletmoo.ld26.entity.level
 			);
 			m_emitter.newType( ParticleDef.POOF, [0, 1, 2, 3] );
 			m_emitter.setMotion( ParticleDef.POOF, 0, 1.0, 0.4, 360.0, 0.0, 0.8 );
+			
+			
+			var element:XML;
+			for each ( element in heartData )
+			{
+				var x:int = element.@x;
+				var y:int = element.@y;
+				var chance:Number = element.@chance;
+				
+				if ( Math.random() <= chance )
+					new Heart( offset * WIDTH + x * Display.SCALE, y * Display.SCALE );
+			}
 			
 			
 			type = CollisionDef.WORLD;

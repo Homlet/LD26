@@ -88,7 +88,7 @@ package uk.co.homletmoo.ld26.world
 			else if ( m_screenIterator++ < SCREENS - 1 )
 				fadeIn()
 			else
-				FP.world = new GameWorld();
+				FP.world = new MenuWorld();
 		}
 		
 	}

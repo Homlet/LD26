@@ -1,6 +1,7 @@
 package uk.co.homletmoo.ld26 
 {
 	import net.flashpunk.utils.Key;
+	import net.flashpunk.utils.Input;
 	
 	/**
 	 * ...
@@ -8,11 +9,15 @@ package uk.co.homletmoo.ld26
 	 */
 	public class InputDef 
 	{
-		public static const BUTTON:String = " ";
+		public static const BUTTON:String = "b";
+		public static const PAUSE:String = "p";
+		public static const MUTE:String = "m";
 		
 		public static function initialize():void
 		{
-			net.flashpunk.utils.Input.define( BUTTON, Key.X, Key.C, Key.SPACE, Key.UP );
+			Input.define( BUTTON, Key.X, Key.C, Key.SPACE, Key.UP );
+			Input.define( PAUSE, Key.P, Key.ESCAPE );
+			Input.define( MUTE, Key.M );
 		}
 		
 	}

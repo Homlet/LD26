@@ -64,7 +64,7 @@ package uk.co.homletmoo.ld26.entity
 				{
 					if ( m_pressed )
 					{
-						Sound.MENU_ENTER.play();
+						Sound.MENU_ENTER.play( 0.4 );
 						FP.world = new GameWorld();
 					}
 					
@@ -72,6 +72,7 @@ package uk.co.homletmoo.ld26.entity
 				}
 			} else
 			{
+				m_pressed = false;
 				m_graphic.play( RELEASE );
 			}
 		}

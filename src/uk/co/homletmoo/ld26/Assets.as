@@ -28,6 +28,16 @@ package uk.co.homletmoo.ld26
 			return result;
 		}
 		
+		public static function zeroPad( n:int, width:int ):String
+		{
+			var str:String = "" + n;
+			
+			while ( str.length < width )
+				str = "0" + str;
+			
+			return str;
+		}
+		
 		// Graphics
 		[Embed (source = "res/HMV2.png")]
 		public static const HM_LOGO_RAW:Class;
@@ -49,6 +59,10 @@ package uk.co.homletmoo.ld26
 		public static const POOF_RAW:Class;
 		public static const POOF:BitmapData = FP.getBitmap( POOF_RAW );
 		
+		[Embed (source = "res/blood.png")]
+		public static const BLOOD_RAW:Class;
+		public static const BLOOD:BitmapData = FP.getBitmap( BLOOD_RAW );
+		
 		[Embed (source = "res/health.png")]
 		public static const HEALTH_RAW:Class;
 		public static const HEALTH:BitmapData = FP.getBitmap( HEALTH_RAW );
@@ -65,6 +79,18 @@ package uk.co.homletmoo.ld26
 		public static const RETRY_RAW:Class;
 		public static const RETRY:BitmapData = FP.getBitmap( RETRY_RAW );
 		
+		[Embed (source = "res/heart.png")]
+		public static const HEART_RAW:Class;
+		public static const HEART:BitmapData = FP.getBitmap( HEART_RAW );
+		
+		[Embed (source = "res/play.png")]
+		public static const PLAY_RAW:Class;
+		public static const PLAY:BitmapData = FP.getBitmap( PLAY_RAW );
+		
+		[Embed (source = "res/title.png")]
+		public static const MENU_RAW:Class;
+		public static const MENU:BitmapData = FP.getBitmap( MENU_RAW );
+		
 		// OGMO
 		[Embed (source = "ogmo/001.oel", mimeType = "application/octet-stream")]
 		public static const OGMO_001:Class;
@@ -74,6 +100,14 @@ package uk.co.homletmoo.ld26
 		public static const OGMO_003:Class;
 		[Embed (source = "ogmo/004.oel", mimeType = "application/octet-stream")]
 		public static const OGMO_004:Class;
+		[Embed (source = "ogmo/005.oel", mimeType = "application/octet-stream")]
+		public static const OGMO_005:Class;
+		[Embed (source = "ogmo/006.oel", mimeType = "application/octet-stream")]
+		public static const OGMO_006:Class;
+		[Embed (source = "ogmo/007.oel", mimeType = "application/octet-stream")]
+		public static const OGMO_007:Class;
+		[Embed (source = "ogmo/008.oel", mimeType = "application/octet-stream")]
+		public static const OGMO_008:Class;
 	}
 
 }

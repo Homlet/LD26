@@ -2,6 +2,8 @@ package uk.co.homletmoo.ld26.entity
 {
 	import flash.geom.Point;
 	import net.flashpunk.*;
+	import net.flashpunk.graphics.Emitter;
+	import net.flashpunk.graphics.Graphiclist;
 	import net.flashpunk.graphics.Image;
 	import net.flashpunk.graphics.Spritemap;
 	import net.flashpunk.utils.Input;
@@ -12,6 +14,7 @@ package uk.co.homletmoo.ld26.entity
 	import uk.co.homletmoo.ld26.CollisionDef;
 	import uk.co.homletmoo.ld26.Const;
 	import uk.co.homletmoo.ld26.Main;
+	import uk.co.homletmoo.ld26.ParticleDef;
 	import uk.co.homletmoo.ld26.Sound;
 	import uk.co.homletmoo.ld26.world.EndWorld;
 	import uk.co.homletmoo.ld26.world.GameWorld;
@@ -42,12 +45,14 @@ package uk.co.homletmoo.ld26.entity
 		
 		
 		private var m_graphic:Spritemap;
+		private var m_emitter:Emitter;
 		
 		private var m_velocity:Point;
 		private var m_maxVelocityX:Number;
 		
 		private var m_inKnockback:Boolean;
 		private var m_graceTimer:Number;
+		private var m_knockbackTimer:Number;
 		
 		private var m_onGround:Boolean;
 		private var m_jumped:Boolean;
@@ -55,6 +60,8 @@ package uk.co.homletmoo.ld26.entity
 		private var m_ledgeTimer:Number;
 		
 		private var m_deathTimer:Number;
+		private var m_emitterTimer:Number;
+		private var m_deathQuakeStarted:Boolean;
 		
 		public function Player() 
 		{
@@ -69,11 +76,18 @@ package uk.co.homletmoo.ld26.entity
 			m_graphic.add( ANIM_DEATH, [8, 9, 10, 11, 12], 2, false );
 			m_graphic.play( ANIM_WALKING );
 			
+			m_emitter = new Emitter( Assets.BLOOD, 8, 8 );
+			m_emitter.newType( ParticleDef.BLOOD, [0] );
+			m_emitter.setMotion( ParticleDef.BLOOD, 45.0, 100.0, 1.5, 90.0 );
+			m_emitter.setGravity( ParticleDef.BLOOD, Const.GRAVITY );
+			m_emitter.setAlpha( ParticleDef.BLOOD, 0.9, 0 );
+			
 			m_velocity = new Point( 0, 0 );
 			m_maxVelocityX = START_MAX_VELOCITY_X;
 			
 			m_inKnockback = false;
 			m_graceTimer = 0.0;
+			m_knockbackTimer = 0.0;
 			
 			m_onGround = false;
 			m_jumped = false;
@@ -81,8 +95,10 @@ package uk.co.homletmoo.ld26.entity
 			m_ledgeTimer = LEDGE_LENGTH;
 			
 			m_deathTimer = 0.0;
+			m_emitterTimer = 0.0;
+			m_deathQuakeStarted = false;
 			
-			graphic = m_graphic;
+			graphic = new Graphiclist( m_emitter, m_graphic );
 			
 			type = CollisionDef.PLAYER;
 			layer = -20;
@@ -96,18 +112,31 @@ package uk.co.homletmoo.ld26.entity
 		{
 			if ( GameWorld.globals.health <= 0 )
 			{
+				if ( !m_deathQuakeStarted )
+				{
+					m_deathQuakeStarted = true;
+					Main.quake.start( 0.25, 2.5 );
+				}
+				
 				m_deathTimer += FP.elapsed;
+				m_emitterTimer += FP.elapsed;
+				
+				if ( m_emitterTimer < 1.5 && Math.floor( Math.random() * 4 ) == 0 )
+					m_emitter.emit( ParticleDef.BLOOD, 2 + 26 * Math.random(), 10 + 28 * Math.random() );
 				
 				m_graphic.alpha = 1.0;
 				m_graphic.play( ANIM_DEATH );
 				
-				if ( m_deathTimer % 0.5 <= 0.1 && m_deathTimer > 0.1 )
+				if ( m_deathTimer > 0.5 )
 				{
-					Sound.HIT.play();
+					m_deathTimer = 0;
+					
+					Sound.HIT.play( 0.7 );
 				}
 				
 				if ( m_graphic.complete )
 				{
+					Sound.HIT.stop();
 					Sound.END.play();
 					FP.world = new EndWorld();
 				}
@@ -133,6 +162,7 @@ package uk.co.homletmoo.ld26.entity
 			if ( collide( CollisionDef.WORLD, x + 1, y ) )
 			{				
 				m_inKnockback = true;
+				m_knockbackTimer = 1.0;
 				
 				m_velocity.x = -JUMP_SPEED;
 				m_velocity.y = -JUMP_SPEED * 1.5;
@@ -157,11 +187,12 @@ package uk.co.homletmoo.ld26.entity
 			// Handle grace period
 			if ( m_graceTimer > 0.0 )
 			{
-				if ( m_onGround )
+				if ( m_onGround && m_knockbackTimer < 0.9 )
 					m_inKnockback = false;
 				
 				m_graceTimer -= FP.elapsed;
-				m_graphic.alpha = 0.5;
+				m_knockbackTimer -= FP.elapsed;
+				m_graphic.alpha = 0.55;
 			} else
 			{
 				m_inKnockback = false;

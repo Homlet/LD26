@@ -34,11 +34,15 @@ package uk.co.homletmoo.ld26.entity
 			m_sectionPool.push( mf_loadSectionDefinition( Assets.OGMO_002 ) );
 			m_sectionPool.push( mf_loadSectionDefinition( Assets.OGMO_003 ) );
 			m_sectionPool.push( mf_loadSectionDefinition( Assets.OGMO_004 ) );
+			m_sectionPool.push( mf_loadSectionDefinition( Assets.OGMO_005 ) );
+			m_sectionPool.push( mf_loadSectionDefinition( Assets.OGMO_006 ) );
+			m_sectionPool.push( mf_loadSectionDefinition( Assets.OGMO_007 ) );
+			m_sectionPool.push( mf_loadSectionDefinition( Assets.OGMO_008 ) );
 			
 			m_playerPos = Player.START_POSITION;
 			
 			
-			var section:Section = new Section( 0, m_sectionPool[0][0], m_sectionPool[0][1] );
+			var section:Section = new Section( 0, m_sectionPool[0][0], m_sectionPool[0][1], m_sectionPool[0][2] );
 			section.forceMinimalize( m_playerPos.x );
 			m_sections[0] = section;
 			
@@ -58,7 +62,7 @@ package uk.co.homletmoo.ld26.entity
 				if ( m_sections[index] == null )
 				{
 					var random:int = Math.floor( Math.random() * m_sectionPool.length );
-					var section:Section = new Section( index, m_sectionPool[random][0], m_sectionPool[random][1] );
+					var section:Section = new Section( index, m_sectionPool[random][0], m_sectionPool[random][1], m_sectionPool[random][2] );
 					
 					m_sections[index] = section;
 				}
@@ -93,12 +97,14 @@ package uk.co.homletmoo.ld26.entity
 			
 			var tiles:XMLList = xmlData.Tiles.tile;
 			var grid:String = xmlData.Collision.*;
+			var hearts:XMLList = xmlData.Objects.Heart;
 			
-			var pair:Array = new Array();
-			pair.push( tiles );
-			pair.push( grid );
+			var arr:Array = new Array();
+			arr.push( tiles );
+			arr.push( grid );
+			arr.push( hearts );
 			
-			return pair;
+			return arr;
 		}
 	}
 

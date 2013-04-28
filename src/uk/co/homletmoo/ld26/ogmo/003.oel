@@ -1,4 +1,7 @@
 <level>
+  <Objects>
+    <Heart id="0" x="272" y="32" chance="0.3" />
+  </Objects>
   <Collision exportMode="Bitstring">000000000000000000000000000000
 000000000000000000000111000000
 000000000000001100000111111000

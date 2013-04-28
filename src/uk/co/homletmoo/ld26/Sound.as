@@ -29,6 +29,12 @@ package uk.co.homletmoo.ld26
 		[Embed (source = "res/menu_enter.mp3")] public static const MENU_ENTER_RAW:Class;
 		public static var MENU_ENTER:Sfx;
 		
+		[Embed (source = "res/intro.mp3")] public static const INTRO_RAW:Class;
+		[Embed (source = "res/music.mp3")] public static const LOOP_RAW:Class;
+		public static var LOOP:Sfx;
+		
+		public static var MUSIC:Sfx;
+		
 		
 		public static function initialize():void
 		{
@@ -39,6 +45,13 @@ package uk.co.homletmoo.ld26
 			JUMP = new Sfx( JUMP_RAW );
 			MENU_BLIP = new Sfx( MENU_BLIP_RAW );
 			MENU_ENTER = new Sfx( MENU_ENTER_RAW );
+			MUSIC = new Sfx( INTRO_RAW, musicLoop );
+			LOOP = new Sfx( LOOP_RAW );
+		}
+		
+		private static function musicLoop():void
+		{
+			LOOP.loop();
 		}
 	}
 
